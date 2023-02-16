@@ -1,0 +1,10 @@
+logger:
+  filename: ./logs/smart.log
+  level: info
+  maxage: 3
+  maxbackups: 3
+  maxsize: 5
+server:
+  mode: release
+  address: 127.0.0.1
+  port: :80
