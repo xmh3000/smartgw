@@ -21,7 +21,7 @@ func NewGin(lifecycle fx.Lifecycle, config *config.Config, db *bolt.DB) *gin.Eng
 	engine.StaticFile("/", "./webroot/index.html")
 	engine.StaticFile("/favicon.ico", "./webroot/favicon.ico")
 
-	server := &http.Server{Addr: config.Server.Address, Handler: engine}
+	server := &http.Server{Addr: config.Server.Port, Handler: engine}
 	lifecycle.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			go func() {

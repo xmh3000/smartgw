@@ -48,7 +48,7 @@ func NewConfig() *Config {
 		Server: Server{
 			Mode:    "release",
 			Address: "127.0.0.1",
-			Port:    ":8080",
+			Port:    ":80",
 		},
 	}
 	conf := &Config{}
