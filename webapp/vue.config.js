@@ -25,18 +25,20 @@ module.exports = {
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
   publicPath: '/',
-  outputDir: 'dist',
+  outputDir: '../webroot',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
-    port: port,
-    open: true,
-    overlay: {
-      warnings: false,
-      errors: true
-    },
-    before: require('./mock/mock-server.js')
+    // port: port,
+    // open: true,
+    // overlay: {
+    //   warnings: false,
+    //   errors: true
+    // },
+    // before: require('./mock/mock-server.js')
+    port: 9999,
+    proxy: 'http://localhost/'
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

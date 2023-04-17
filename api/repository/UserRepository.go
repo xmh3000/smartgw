@@ -85,7 +85,7 @@ func (u *userRepository) Migrate() error {
 	if _, err := u.Find("admin"); err != nil {
 		return u.Save(&domain.User{
 			Username: "admin",
-			Password: "admin",
+			Password: "123456",
 		})
 	}
 
