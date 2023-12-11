@@ -9,11 +9,10 @@
 
 @upx.exe smartgw
 
-@rmdir smartgw\smartgw /S /Q
+@rmdir release\smartgw /S /Q
 
-@xcopy config\*.* smartgw\smartgw\config\*.* /y /s
-@xcopy webroot\*.* smartgw\smartgw\webroot\*.* /y /s
-@copy smartgw smartgw\smartgw\smartgw /y
-@copy install.sh smartgw\smartgw\install.sh /y
+@xcopy config\*.* release\smartgw\config\*.* /y /s
+@xcopy webroot\*.* release\smartgw\webroot\*.* /y /s
+@copy smartgw release\smartgw\smartgw /y
 
 @echo ok!
