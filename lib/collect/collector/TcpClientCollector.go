@@ -1,9 +1,9 @@
 package collector
 
 import (
+	"go.uber.org/zap"
 	"net"
 	"smartgw/api/domain"
-	"smartgw/lib/logger"
 	"strconv"
 	"time"
 )
@@ -19,22 +19,22 @@ var _ Collector = (*TcpClientCollector)(nil)
 func (t *TcpClientCollector) Open(device *domain.Device) bool {
 	var err error
 	if t.Conn, err = net.DialTimeout("tcp", t.TcpClient.Ip+":"+strconv.Itoa(t.TcpClient.Port), 500*time.Millisecond); err != nil {
-		logger.Zap.Error("打开Tcp客户端失败!", t.TcpClient)
+		zap.S().Error("打开Tcp客户端失败!", t.TcpClient)
 		t.Conn = nil
 		return false
 	}
 
-	logger.Zap.Debug("打开Tcp客户端成功!", t.TcpClient)
+	zap.S().Debug("打开Tcp客户端成功!", t.TcpClient)
 	return true
 }
 
 func (t *TcpClientCollector) Close() bool {
 	if t.Conn != nil {
 		if err := t.Conn.Close(); err != nil {
-			logger.Zap.Error("关闭Tcp客户端失败!", t.TcpClient)
+			zap.S().Error("关闭Tcp客户端失败!", t.TcpClient)
 			return false
 		}
-		logger.Zap.Debug("关闭Tcp客户端成功!", t.TcpClient)
+		zap.S().Debug("关闭Tcp客户端成功!", t.TcpClient)
 		t.Conn = nil
 	}
 	return true

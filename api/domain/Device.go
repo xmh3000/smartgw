@@ -8,6 +8,9 @@ type Device struct {
 	Type      DeviceType `json:"type"`      //设备类型
 	Address   string     `json:"address"`   //通讯地址
 	Collector Collector  `json:"collector"` //采集接口
+	// Alone、Serial 可根据实际情况去掉，即一个采集接口有【固定】的波特率和驱动程序-----------
+	Alone  bool   `json:"alone"`  //独立开关
+	Serial Serial `json:"serial"` //通讯参数
 	//----------------------------------------------------------------------------
 	Online         bool      `json:"online"`         //设备在线
 	CollectTime    time.Time `json:"collectTime"`    //最后采集时间

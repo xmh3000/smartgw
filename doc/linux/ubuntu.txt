@@ -1,0 +1,39 @@
+一、安装
+（一）网卡设置成静态
+    1、安装之后修改ip
+        编辑: /etc/netplan/00-installer-config.yaml
+        执行: sudo netplan apply
+    2、安装net-tools、iputils-ping
+	apt update
+	apt install net-tools
+	apt install iputils-ping
+（二）安装ssh
+二、安装之后
+（一）设置ssh
+    1、启用root
+         设置root密码：asudo passwd root
+    2、切换root身份：su root
+    3、修改配置：vim /etc/ssh/sshd_config
+         添加：PermitRootLogin yes
+    4、重启ssh服务：/etc/init.d/ssh restart
+（二）修改时区、时间
+    1、查看时区：date -R
+    2、修改时区：sudo tzselect
+    3、根据提示选择：亚洲->中国->北京（Asia/China/Beijing time）
+    4、创建时区软连接：sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+    5、查看系统时区：timedatectl
+    6、同步时间：ntpdate time.windows.com
+    7、修改CMOS的时间：sudo hwclock --systohc
+（三）更换apt-get源
+    1、备份源列表文件：cp -a /etc/apt/sources.list /etc/apt/sources.list.bak
+    2、编辑源列表文件:  vim /etc/apt/sources.list
+    3、替换字符串:        :%s /ports.ubuntu.com/mirrors.aliyun.com/g
+         也可以在命令行: sudo sed -i "s@ports.ubuntu.com@mirrors.aliyun.com@g" /etc/apt/sources.list
+（四）安装docker、docker-compose
+    1、docker官网安装步骤：https://docs.docker.com/engine/install/ubuntu/
+    2、docker-compose：
+         下载：
+         sudo curl -L "https://github.com/docker/compose/releases/download/v2.6.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+         执行权限：
+         sudo chmod +x /usr/local/bin/docker-compose
+

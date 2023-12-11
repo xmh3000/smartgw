@@ -1,7 +1,7 @@
 package script
 
 import (
-	"smartgw/lib/logger"
+	"go.uber.org/zap"
 	"sync"
 
 	"github.com/yuin/gluamapper"
@@ -61,9 +61,9 @@ func LuaCallNewVariables(L *lua.LState) {
 	L.Pop(1)
 	switch ret.(type) {
 	case lua.LString:
-		logger.Zap.Info("string")
+		zap.S().Info("string")
 	case *lua.LTable:
-		logger.Zap.Info("table")
+		zap.S().Info("table")
 	}
 
 	type VariableTemplate struct {
@@ -84,7 +84,7 @@ func LuaCallNewVariables(L *lua.LState) {
 	}
 
 	for _, v := range VariableMap.Variable {
-		logger.Zap.Infof("%+v", v.Label)
+		zap.S().Infof("%+v", v.Label)
 	}
 }
 
@@ -115,7 +115,7 @@ func GetCRCModbus(L *lua.LState) int {
 
 	LuaVariableMap := LuaVariableMapTemplate{}
 	if err := gluamapper.Map(lv, &LuaVariableMap); err != nil {
-		logger.Zap.Warnf("GetCRC16 gluamapper.Map err %v", err)
+		zap.S().Warnf("GetCRC16 gluamapper.Map err %v", err)
 	}
 
 	nBytes := make([]byte, 0)
@@ -142,7 +142,7 @@ func CheckCRCModbus(L *lua.LState) int {
 
 	LuaVariableMap := LuaVariableMapTemplate{}
 	if err := gluamapper.Map(lv, &LuaVariableMap); err != nil {
-		logger.Zap.Warnf("GetCRC16 gluamapper.Map err %v", err)
+		zap.S().Warnf("GetCRC16 gluamapper.Map err %v", err)
 	}
 
 	nBytes := make([]byte, 0)
@@ -167,7 +167,7 @@ func GetCRCModbusLittleEndian(L *lua.LState) int {
 
 	LuaVariableMap := LuaVariableMapTemplate{}
 	if err := gluamapper.Map(lv, &LuaVariableMap); err != nil {
-		logger.Zap.Warnf("GetCRC16 gluamapper.Map err %v", err)
+		zap.S().Warnf("GetCRC16 gluamapper.Map err %v", err)
 	}
 
 	nBytes := make([]byte, 0)

@@ -1,37 +1,118 @@
-# smartgw
+## 一、项目名称 smartgw(smart gateway)
 
-#### 介绍
-智能网关(smartgw)是一个物联网网关程序，主要用于设备管理、数据采集、命令下发等操作。
+> 物联网网关，用来实现通过485、网桥（485-tcp）进行数据采集、上报（到物联平台）、命令下发等功能。
 
-#### 软件架构
-软件架构说明
+## 二、系统架构
+###（一）系统架构
+#### 1、架构图
+![alt 系统架构](./doc/img/compose.jpg)
+#### 2、架构说明
+
+> 系统由三部分组成：工作单元、存储单元、运维单元
+>    ```
+>    1、工作单元
+>       工作单元主要实现数据采集、数据上报、命令下发等功能
+>    2、存储单元
+>       存储网关运行相关的各种配置数据：采集接口、网口、设备类型、设备清单、采集任务、上报任务等内容。
+>    3、运维单元
+>       主要包含: 基础数据维护（采集接口、网口、设备类型、设备清单）、任务计划（采集任务、上报任务）调试服务(接口调试、系统升级）
+>    ```
+###（二）领域模型
+![alt 领域模型](./doc/img/domain.jpg)
+
+> 领域模型缺少网口信息
+
+###（三）时序图
+![alt 删除](./doc/img/device-type-delete.jpg)
+#### 4、WebApi
+具体内容请 [查看](./doc/ts004 WebApi.md)
+###（四）启动流程
+![alt 流程](./doc/img/start.jpg)
+```
+1、在物联平台添加网关 YB00***
+2、修改配置文件config/config.yml中的网关信息
+3、运行后台程序
+```
 
 
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+## 三、技术选型
+1. 依赖注入
+```
+使用uber的fx实现依赖注入功能
+```
+2. 配置文件
+```
+使用viper读取yml文件
+```
+3. 日志管理
+```
+使用uber的zap日志实现
+```
+4. 数据库
+```
+使用boltdb（k，v型非关系数据库）
+```
+5. 文件操作: 自定义操作
+6. web服务器: [gin 文档](https://pkg.go.dev/github.com/gin-gonic/gin)
+```
+中间件
+1、JWTToken
+2、异常恢复
+3、文件上传
+```
+7. 任务调度：cron
+## 四、任务
+```
+1、管理单元
+    （1）网络接口（尚未完成...)
+    （2）采集接口
+    （3）设备类型（物模型）
+    （4）设备清单
+    （5）采集任务
+    （6）上报任务
+    （7）接口调试
+    （8）系统升级（尚未完成...)
+2、工作单元
+    （1）采集通道
+    （2）采集任务
+    （3）上报任务(mqtt)
+    （4）命令下发(mqtt)
+    （5）接口测试
+    （6）系统升级
+3、尚未完成
+    （1）首页
+    （2）网络接口
+    （3）系统升级
+```
+## 五、开发
+1. 编译运行后端
+```
+go run main.go
+```
+2. 编译运行前端
+```
+cd webapp
+npm install // 安装依赖库
+运行...
+npm run dev
+```
+## 六、产品
+1. 编译后端
+```
+    同上
+```
+2. 编译前端
+```
+cd webapp
+npm run build:prod
+```
+经过以前编译，webapp下的vue前端，将被生成到webroot目录下
+## 七、部署
+```
+拷贝以下文件到目标系统（/home/smartgw)
+/
++ smartgw         // 可执行程序，需要执行 chmod +x smartgw
++ config            // 配置文件目录
+  + config.yml      // 配置文件
++ webroot           // web页面
+```

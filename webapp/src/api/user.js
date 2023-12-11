@@ -8,9 +8,9 @@ export function login(data) {
   })
 }
 
-export function find(username) {
+export function findUser() {
   return request({
-    url: 'api/user/' + username,
-    method: 'get'
+    url: 'api/user/admin',
+    method: 'get',
   })
 }

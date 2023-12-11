@@ -1,0 +1,34 @@
+package routes
+
+import (
+	"smartgw/api/controller"
+	"smartgw/lib/web"
+)
+
+type DebugRoute struct {
+	httpServer      *web.HttpServer
+	debugController *controller.DebugController
+}
+
+func NewDebugRoute(
+	httpServer *web.HttpServer,
+	debugController *controller.DebugController) *DebugRoute {
+	return &DebugRoute{
+		httpServer:      httpServer,
+		debugController: debugController,
+	}
+}
+
+func (s *DebugRoute) Setup() {
+	api := s.httpServer.Gin.Group("/api")
+	{
+		api.POST("/debug/test", s.debugController.Test)
+		api.POST("/debug/upgrade", s.debugController.Upgrade)
+		api.POST("/debug/system-status", s.debugController.SystemStatus)
+		api.POST("/debug/system-reboot", s.debugController.SystemReboot)
+		api.POST("/debug/system-ntp", s.debugController.SystemNtp)
+
+		//api.POST("/debug/watchdog-start", s.debugController.WatchdogStart)
+		//api.POST("/debug/watchdog-stop", s.debugController.WatchdogStop)
+	}
+}

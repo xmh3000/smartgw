@@ -9,6 +9,7 @@ require (
 	github.com/gin-gonic/gin v1.8.2
 	github.com/golang-jwt/jwt/v5 v5.0.0-rc.1
 	github.com/natefinch/lumberjack v2.0.0+incompatible
+	github.com/robfig/cron/v3 v3.0.1
 	github.com/shirou/gopsutil/v3 v3.20.10
 	github.com/spf13/viper v1.15.0
 	github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07

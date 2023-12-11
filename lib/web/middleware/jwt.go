@@ -15,6 +15,16 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
+type LoginRequest struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type LoginResponse struct {
+	Username string `json:"username"`
+	Token    string `json:"token"`
+}
+
 func GenerateToken(username string) (string, error) {
 	claims := Claims{
 		username,

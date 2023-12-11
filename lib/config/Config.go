@@ -13,6 +13,14 @@ const (
 )
 
 type (
+	// Config 配置文件
+	Config struct {
+		Gateway `json:"gateway"`
+		Logger  `json:"logger"`
+		Serial  `json:"serial"`
+		Server  `json:"server"`
+	}
+	// Gateway 配置物联平台
 	Gateway struct {
 		Name     string `json:"name"`
 		Ip       string `json:"ip"`
@@ -31,18 +39,16 @@ type (
 		MaxAge     int    `json:"maxage"`
 	}
 
+	// Serial 配置串口
+	Serial struct {
+		OpenEveryTime bool `json:"openeverytime"`
+	}
+
 	// Server 配置网关程序
 	Server struct {
 		Mode    string `json:"mode"`
 		Address string `json:"address"`
 		Port    string `json:"port"`
-	}
-
-	// Config 配置文件
-	Config struct {
-		Gateway `json:"gateway"`
-		Logger  `json:"logger"`
-		Server  `json:"server"`
 	}
 )
 
@@ -62,6 +68,9 @@ func NewConfig() *Config {
 			MaxSize:    3,
 			MaxBackups: 3,
 			MaxAge:     3,
+		},
+		Serial: Serial{
+			OpenEveryTime: false,
 		},
 		Server: Server{
 			Mode:    "release",
@@ -90,6 +99,7 @@ func NewConfig() *Config {
 	fmt.Println(conf)
 	return conf
 }
+
 func SaveConfig(config *Config) {
 	//fmt.Println(config)
 	viper.SetConfigType(configType)

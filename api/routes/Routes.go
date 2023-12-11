@@ -8,12 +8,26 @@ type (
 )
 
 func NewRoutes(
-	userRoute *UserRoute,
 	accountRoute *AccountRoute,
+	userRoute *UserRoute,
+	reportTaskRoute *ReportTaskRoute,
+	collectorRoute *CollectorRoute,
+	ethernetRoute *EthernetRoute,
+	deviceTypeRoute *DeviceTypeRoute,
+	deviceRoute *DeviceRoute,
+	collectTaskRoute *CollectTaskRoute,
+	debugRoute *DebugRoute,
 ) Routes {
 	return Routes{
-		userRoute,
 		accountRoute,
+		userRoute,
+		reportTaskRoute,
+		collectorRoute,
+		ethernetRoute,
+		deviceTypeRoute,
+		deviceRoute,
+		collectTaskRoute,
+		debugRoute,
 	}
 }
 

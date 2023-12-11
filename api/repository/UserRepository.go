@@ -28,6 +28,16 @@ func NewUserRepository(db *bolt.DB) UserRepository {
 	}
 }
 
+func (u *userRepository) Migrate() error {
+	if _, err := u.Find("admin"); err != nil {
+		return u.Save(&domain.User{
+			Username: "admin",
+			Password: "admin!@#",
+		})
+	}
+
+	return nil
+}
 func (u *userRepository) Save(user *domain.User) error {
 	return u.db.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(database.User))
@@ -79,15 +89,4 @@ func (u *userRepository) FindAll() ([]domain.User, error) {
 	})
 
 	return users, err
-}
-
-func (u *userRepository) Migrate() error {
-	if _, err := u.Find("admin"); err != nil {
-		return u.Save(&domain.User{
-			Username: "admin",
-			Password: "admin!@#",
-		})
-	}
-
-	return nil
 }

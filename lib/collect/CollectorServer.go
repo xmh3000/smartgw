@@ -1,11 +1,11 @@
 package collect
 
 import (
-	"greatwall/api/domain"
-	"greatwall/api/repository"
-	"greatwall/lib/collect/worker"
-	"greatwall/lib/config"
-	"greatwall/lib/logger"
+	"go.uber.org/zap"
+	"smartgw/api/domain"
+	"smartgw/api/repository"
+	"smartgw/lib/collect/worker"
+	"smartgw/lib/config"
 	"sync"
 )
 
@@ -32,7 +32,7 @@ func NewCollectorServer(
 
 // InitCollectorServer 初始化
 func InitCollectorServer(server *CollectorServer, repository repository.CollectorRepository) {
-	logger.Zap.Info("初始化采集接口服务器")
+	zap.S().Info("初始化采集接口服务器")
 	if collectors, err := repository.FindAll(); err == nil {
 		for _, collector := range collectors {
 			server.Add(collector)
@@ -42,7 +42,7 @@ func InitCollectorServer(server *CollectorServer, repository repository.Collecto
 
 // Add 新增采集接口服务器
 func (cs *CollectorServer) Add(collector domain.Collector) {
-	logger.Zap.Info("新增采集接口服务器", collector)
+	zap.S().Info("新增采集接口服务器", collector)
 	w := worker.NewWorker(
 		collector, cs.deviceRepository,
 		cs.config,
@@ -54,7 +54,7 @@ func (cs *CollectorServer) Add(collector domain.Collector) {
 
 // Delete 删除采集接口服务器
 func (cs *CollectorServer) Delete(name string) {
-	logger.Zap.Info("删除采集接口服务器", name)
+	zap.S().Info("删除采集接口服务器", name)
 	if value, loaded := cs.collectors.LoadAndDelete(name); loaded {
 		if c, ok := value.(worker.Worker); ok {
 			c.Stop()

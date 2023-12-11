@@ -1,0 +1,19 @@
+gateway:
+  clientid: SM001
+  ip: 192.168.1.242
+  name: 物联平台
+  password: admin
+  port: "1883"
+  username: admin
+logger:
+  filename: ./logs/smart.log
+  level: info
+  maxage: 3
+  maxbackups: 3
+  maxsize: 5
+serial:
+  openeverytime: false # 是否对每个设备都打开关闭串口，如果设备波特率等通讯参数不同，可以设置为true
+server:
+  mode: release
+  address: 127.0.0.1
+  port: :80

@@ -2,8 +2,8 @@ package service
 
 import (
 	"errors"
-	"greatwall/api/domain"
-	"greatwall/api/repository"
+	"smartgw/api/domain"
+	"smartgw/api/repository"
 )
 
 type (

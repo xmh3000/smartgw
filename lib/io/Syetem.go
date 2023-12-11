@@ -36,7 +36,7 @@ var SystemState = SystemStateTemplate{
 	MemUse:        "0",
 	DiskTotal:     "0",
 	DiskUse:       "0",
-	Name:          "GreatWall",
+	Name:          "smartgw",
 	SN:            "2023-02-08",
 	HardVer:       "YG210-N485(2)",
 	SoftVer:       "V 1.0.7",

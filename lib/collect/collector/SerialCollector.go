@@ -2,8 +2,8 @@ package collector
 
 import (
 	"github.com/tarm/serial"
+	"go.uber.org/zap"
 	"smartgw/api/domain"
-	"smartgw/lib/logger"
 	"time"
 )
 
@@ -54,26 +54,26 @@ func (s *SerialCollector) Open(device *domain.Device) bool {
 	var err error
 	s.Port, err = serial.OpenPort(serialConfig)
 	if err != nil {
-		logger.Zap.Errorf("打开串口[%s]失败 %v", s.Name, err)
+		zap.S().Errorf("打开串口[%s]失败 %v", s.Name, err)
 		return false
 	}
 
-	logger.Zap.Debugf("打开串口[%s]成功！", s.Name)
+	zap.S().Debugf("打开串口[%s]成功！", s.Name)
 	return true
 }
 
 func (s *SerialCollector) Close() bool {
 	if s.Port == nil {
-		logger.Zap.Errorf("串口[%s]文件句柄不存在", s.Name)
+		zap.S().Errorf("串口[%s]文件句柄不存在", s.Name)
 		return false
 	}
 
 	err := s.Port.Close()
 	if err != nil {
-		logger.Zap.Errorf("关闭串口[%s]失败, %v", s.Name, err)
+		zap.S().Errorf("关闭串口[%s]失败, %v", s.Name, err)
 	}
 
-	logger.Zap.Debugf("关闭串口[%s]成功", s.Name)
+	zap.S().Debugf("关闭串口[%s]成功", s.Name)
 
 	s.Port = nil
 	return true
