@@ -11,6 +11,7 @@ const (
 	Device      = "Device"      // 设备
 	CollectTask = "CollectTask" // 采集任务
 	ReportTask  = "ReportTask"  // 上报任务
+	Ethernet    = "Ethernet"    // 网卡
 	User        = "User"        // 系统用户
 )
 

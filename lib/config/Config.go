@@ -13,6 +13,15 @@ const (
 )
 
 type (
+	Gateway struct {
+		Name     string `json:"name"`
+		Ip       string `json:"ip"`
+		Port     string `json:"port"`
+		ClientID string `json:"clientid"`
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+
 	// Logger 配置日志文件
 	Logger struct {
 		Level      string `json:"level"`
@@ -31,13 +40,22 @@ type (
 
 	// Config 配置文件
 	Config struct {
-		Logger `json:"logger"`
-		Server `json:"server"`
+		Gateway `json:"gateway"`
+		Logger  `json:"logger"`
+		Server  `json:"server"`
 	}
 )
 
 func NewConfig() *Config {
 	defaultConfig := &Config{
+		Gateway: Gateway{
+			Name:     "物联平台",
+			Ip:       "thingsboard.io",
+			Port:     "1883",
+			ClientID: "SM001",
+			Username: "admin",
+			Password: "admin",
+		},
 		Logger: Logger{
 			Level:      "info",
 			Filename:   "smart.log",
@@ -71,4 +89,18 @@ func NewConfig() *Config {
 
 	fmt.Println(conf)
 	return conf
+}
+func SaveConfig(config *Config) {
+	//fmt.Println(config)
+	viper.SetConfigType(configType)
+	viper.SetConfigFile(configFile)
+	viper.Set("gateway.ip", config.Gateway.Ip)
+	viper.Set("gateway.clientid", config.Gateway.ClientID)
+	viper.Set("gateway.port", config.Gateway.Port)
+
+	err := viper.WriteConfig()
+
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 }

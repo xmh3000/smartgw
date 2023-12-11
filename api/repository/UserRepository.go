@@ -56,7 +56,7 @@ func (u *userRepository) Find(username string) (domain.User, error) {
 		if data != nil {
 			return json.Unmarshal(data, &user)
 		} else {
-			return errors.New("没有找到数据")
+			return errors.New("没有找到相关用户")
 		}
 	})
 
@@ -85,7 +85,7 @@ func (u *userRepository) Migrate() error {
 	if _, err := u.Find("admin"); err != nil {
 		return u.Save(&domain.User{
 			Username: "admin",
-			Password: "123456",
+			Password: "admin!@#",
 		})
 	}
 
